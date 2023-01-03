@@ -24,7 +24,7 @@ class User
         $this->confirm_password = htmlspecialchars(strip_tags($this->confirm_password));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->name = htmlspecialchars(strip_tags($this->name));
-        $this->db["users"][] = array("login" => $this->login, "password" => $this->password, "confirm_password" => $this->confirm_password, "email" => $this->email, "name" => $this->name);
+        $this->db["users"][] = array("login" => $this->login, "password" => md5($this->password. "Sault"), "confirm_password" => md5($this->confirm_password. "Sault"), "email" => $this->email, "name" => $this->name);
 
         file_put_contents('./config/database.json', json_encode($this->db, JSON_FORCE_OBJECT));
         return true;

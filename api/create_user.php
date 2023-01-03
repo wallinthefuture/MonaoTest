@@ -31,24 +31,24 @@ if (
 
 ) {
 
-
     // устанавливаем значения свойств товара
     $user->login = $data->login;
     $user->password = $data->psw;
     $user->confirm_password = $data->psw_repeat;
     $user->email = $data->email;
     $user->name = $data->name;
-
-    if ($user->checkEmailAndLogin()){
+    if ($user->password!= $user->confirm_password){
+        http_response_code(400);
+        echo json_encode(array("message" => "Пароль не совпадает с подтверждением пароля"), JSON_UNESCAPED_UNICODE);
+    } elseif ($user->checkEmailAndLogin()) {
         http_response_code(400);
         echo json_encode(array("message" => "Пользователь с таким логином и почтой есть."), JSON_UNESCAPED_UNICODE);
-    }else{
+    } else {
         if ($user->create()) {
             // установим код ответа - 201 создано
-            http_response_code(201);
 
-            // сообщим пользователю
-            echo json_encode(array("message" => "Комикс был создан."), JSON_UNESCAPED_UNICODE);
+            http_response_code(201);
+            echo json_encode(array("message" => "Пользователь был создан."), JSON_UNESCAPED_UNICODE);
         } else {
 
             http_response_code(503);
@@ -57,8 +57,6 @@ if (
             echo json_encode(array("message" => "Невозможно создать комикс."), JSON_UNESCAPED_UNICODE);
         }
     }
-    // создание товара
-
 } else {
 
     http_response_code(400);

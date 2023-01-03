@@ -4,7 +4,7 @@ class User
 {
     private $db;
 
-    public $id;
+
     public $login;
     public $password;
     public $confirm_password;
@@ -24,16 +24,24 @@ class User
         $this->confirm_password = htmlspecialchars(strip_tags($this->confirm_password));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->name = htmlspecialchars(strip_tags($this->name));
-
-        $this->db[$this->id]["login"] = $this->login;
-        $this->db[$this->id]["password"] = $this->password;
-        $this->db[$this->id]["confirm_password"] = $this->confirm_password;
-        $this->db[$this->id]["email"] = $this->email;
-        $this->db[$this->id]["name"] = $this->name;
+        $this->db["users"][] = array("login" => $this->login, "password" => $this->password, "confirm_password" => $this->confirm_password, "email" => $this->email, "name" => $this->name);
 
         file_put_contents('./config/database.json', json_encode($this->db, JSON_FORCE_OBJECT));
         return true;
 
+    }
+
+    function checkEmailAndLogin()
+    {
+
+        foreach ($this->db as $users => $item) {
+            foreach ($item as $key => $value) {
+                if ($value["login"] == $this->login || $value["email"] == $this->email) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

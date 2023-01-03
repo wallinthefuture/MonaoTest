@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once "./objects/user.php";
 
-$jsonArray=[];
+$jsonArray = [];
 
 //Если файл существует - получаем его содержимое
 if (file_exists('./config/database.json')) {
@@ -20,37 +20,45 @@ if (file_exists('./config/database.json')) {
 $user = new User($jsonArray);
 
 $data = json_decode(file_get_contents("php://input"));
-
+json_encode($data);
 
 if (
     !empty($data->login) &&
-    !empty($data->password) &&
-    !empty($data->confirm_password) &&
+    !empty($data->psw) &&
+    !empty($data->psw_repeat) &&
     !empty($data->email) &&
     !empty($data->name)
 
 ) {
+
+
     // устанавливаем значения свойств товара
     $user->login = $data->login;
-    $user->password = $data->password;
-    $user->confirm_password = $data->confirm_password;
+    $user->password = $data->psw;
+    $user->confirm_password = $data->psw_repeat;
     $user->email = $data->email;
     $user->name = $data->name;
 
-    // создание товара
-    if ($user->create()) {
-        // установим код ответа - 201 создано
-        http_response_code(201);
+    if ($user->checkEmailAndLogin()){
+        http_response_code(400);
+        echo json_encode(array("message" => "Пользователь с таким логином и почтой есть."), JSON_UNESCAPED_UNICODE);
+    }else{
+        if ($user->create()) {
+            // установим код ответа - 201 создано
+            http_response_code(201);
 
-        // сообщим пользователю
-        echo json_encode(array("message" => "Комикс был создан."), JSON_UNESCAPED_UNICODE);
-    } else {
+            // сообщим пользователю
+            echo json_encode(array("message" => "Комикс был создан."), JSON_UNESCAPED_UNICODE);
+        } else {
 
-        http_response_code(503);
+            http_response_code(503);
 
 
-        echo json_encode(array("message" => "Невозможно создать комикс."), JSON_UNESCAPED_UNICODE);
+            echo json_encode(array("message" => "Невозможно создать комикс."), JSON_UNESCAPED_UNICODE);
+        }
     }
+    // создание товара
+
 } else {
 
     http_response_code(400);

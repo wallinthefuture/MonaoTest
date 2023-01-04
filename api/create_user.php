@@ -46,14 +46,11 @@ if (
     } else {
         if ($user->create()) {
             // установим код ответа - 201 создано
-
             http_response_code(201);
-            echo json_encode(array("message" => "Пользователь был создан."), JSON_UNESCAPED_UNICODE);
+
         } else {
 
             http_response_code(503);
-
-
             echo json_encode(array("message" => "Невозможно создать комикс."), JSON_UNESCAPED_UNICODE);
         }
     }

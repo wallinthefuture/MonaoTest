@@ -4,23 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function ajaxSend(formData) {
 
-        let response = await fetch("create_user.php", { // файл-обработчик
-            method: "POST", headers: {
+        let response = await fetch("auth.php", { // файл-обработчик
+            method: "PUT", headers: {
                 "Content-Type": "application/json", // отправляемые данные
             }, body: JSON.stringify(formData)
         })
-        if (response.ok) {
-            window.location.replace("http://localhost/MongoTest/api/auth.html");
-        }
-        let result = response.json();
-        result.then(message => {
-            const errorMessage = document.createElement('div');
-            errorMessage.classList.add('error__message');
-            errorMessage.innerHTML = `
+        if (!response.ok) {
+            let result = response.json();
+            result.then(message => {
+                const errorMessage = document.createElement('div');
+                errorMessage.classList.add('error__message');
+                errorMessage.innerHTML = `
         <div class = "modal__title">${message["message"]}</div>
     `
-            button.insertAdjacentElement('beforebegin', errorMessage);
-        });
+                button.insertAdjacentElement('beforebegin', errorMessage);
+            });
+        }else{
+            window.location.href="http://localhost/MongoTest/api/index.html";
+        }
+
     }
 
     forms.forEach((item) => {

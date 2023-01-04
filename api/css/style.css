@@ -2,6 +2,11 @@
     box-sizing: border-box
 }
 
+.valid__message{
+    display: none;
+}
+
+
 /* Add padding to containers */
 .container {
     padding: 16px;
@@ -22,6 +27,11 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus  {
     outline: none;
 }
 
+/*input[type=password]:focus~p {*/
+/*    color: red;*/
+/*    margin: 0 0 0 0;*/
+/*    display: block;*/
+/*}*/
 /* Overwrite default styles of hr */
 hr {
     border: 1px solid #f1f1f1;
@@ -44,6 +54,12 @@ hr {
     opacity: 1;
 }
 
+/*.registerbtn:active input[type=password]:invalid~p {
+    color: red;
+    margin: 0 0 0 0;
+    display: block;
+}*/
+
 /* Add a blue text color to links */
 a {
     color: dodgerblue;
@@ -52,5 +68,10 @@ a {
 /* Set a grey background color and center the text of the "sign in" section */
 .signin {
     background-color: #f1f1f1;
+    text-align: center;
+}
+
+.error__message{
+    color: red;
     text-align: center;
 }

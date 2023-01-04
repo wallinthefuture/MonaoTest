@@ -1,30 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const forms = document.querySelectorAll("form");
+    const button = document.querySelector("button")
 
-    const ajaxSend = (formData) => {
-        fetch("create_user.php", { // файл-обработчик
+    async function ajaxSend(formData) {
+
+        let response = await fetch("create_user.php", { // файл-обработчик
             method: "POST", headers: {
                 "Content-Type": "application/json", // отправляемые данные
             }, body: JSON.stringify(formData)
-        }).then(response => response.json())
-            .then(messages => {
-                alert(messages['message'])
-                window.location.replace("http://localhost/MongoTest/api/auth.html")
-            })
-            .catch(error => console.error(error))
-    };
+        })
+        if (response.ok) {
+            window.location.replace("http://localhost/MongoTest/api/auth.html");
+        }
+        let result = response.json();
+        result.then(message => {
+            const errorMessage = document.createElement('div');
+            errorMessage.classList.add('error__message');
+            errorMessage.innerHTML = `
+        <div class = "modal__title">${message["message"]}</div>
+    `
+            button.insertAdjacentElement('beforebegin', errorMessage);
+        });
+    }
 
-    if (document.getElementsByTagName("form")) {
-        const forms = document.getElementsByTagName("form");
+    forms.forEach((item) => {
+        bindpostData(item);
+    });
 
-        for (let i = 0; i < forms.length; i++) {
-            forms[i].addEventListener("submit", function (e) {
-                e.preventDefault();
+    function bindpostData(form) {
 
-                let formData = new FormData(this);
-                formData = Object.fromEntries(formData);
-                ajaxSend(formData);
+        form.addEventListener("submit", function (e) {
+            const errorMessage = document.querySelector('.error__message');
+            if(errorMessage){
+                errorMessage.remove();
+            }
+            e.preventDefault();
+
+            let formData = new FormData(this);
+            formData = Object.fromEntries(formData);
+            ajaxSend(formData).then(response => {
 
             });
-        }
+        })
     }
+
 });

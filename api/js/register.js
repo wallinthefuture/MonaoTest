@@ -15,12 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const errorMessage = document.createElement('div');
                 errorMessage.classList.add('error__message');
                 errorMessage.innerHTML = `
-        <div class = "modal__title">${message["message"]}</div>
+        <div>${message["message"]}</div>
     `
                 button.insertAdjacentElement('beforebegin', errorMessage);
             });
         } else {
-            window.location.href = "http://localhost/MongoTest/api/auth.html";
+            window.location.href = "../../api/auth.html";
         }
 
     }

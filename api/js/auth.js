@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 button.insertAdjacentElement('beforebegin', errorMessage);
             });
         }else{
-            window.location.href="http://localhost/MongoTest/api/index.html";
+            window.location.href="../../api/index.html";
         }
 
     }

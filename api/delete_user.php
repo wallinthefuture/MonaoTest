@@ -21,7 +21,7 @@ if ($db->deleteUser($data->id)) {
     http_response_code(200);
 
     // сообщение пользователю
-    echo json_encode(array("message" => "Пользователь был удален удалён"), JSON_UNESCAPED_UNICODE);
+    echo json_encode(array("message" => "Пользователь был удалён"), JSON_UNESCAPED_UNICODE);
 }
 // если не удается удалить товар
 else {

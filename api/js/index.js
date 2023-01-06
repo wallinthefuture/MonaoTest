@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetch("check_auth.php").then(response => {
         if (!response.ok) {
-            window.location.href = "http://localhost/MongoTest/api/auth.html";
+            window.location.href = "../../api/auth.html";
         } else {
             response.json().then(name => {
                 const Message = document.createElement('div');
                 Message.innerHTML = `
-        <div class="main__message" >Hello ${name}</div>
+        <div >Hello ${name}</div>
     `
                 button.insertAdjacentElement('beforebegin', Message);
             });
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", function(e){
         fetch("logout.php").then(response => {
            if(response.ok){
-               window.location.href = "http://localhost/MongoTest/api/auth.html"
+               window.location.href = "../../api/auth.html"
            }
         })
     })

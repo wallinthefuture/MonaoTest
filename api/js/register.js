@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const forms = document.querySelectorAll("form");
-    const button = document.querySelector("button")
+    const button = document.querySelector("button");
 
     async function ajaxSend(formData) {
 
@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
     `
                 button.insertAdjacentElement('beforebegin', errorMessage);
             });
-        }else{
-            window.location.href="http://localhost/MongoTest/api/auth.html";
+        } else {
+            window.location.href = "http://localhost/MongoTest/api/auth.html";
         }
 
     }
@@ -31,9 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function bindpostData(form) {
 
+
         form.addEventListener("submit", function (e) {
+
+
             const errorMessage = document.querySelector('.error__message');
-            if(errorMessage){
+            if (errorMessage) {
                 errorMessage.remove();
             }
             e.preventDefault();
@@ -45,5 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         })
     }
+
 
 });

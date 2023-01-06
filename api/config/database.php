@@ -3,23 +3,31 @@
 class Database
 {
 
-    public $db;
+    private $db;
 
     public function __construct()
     {
         if (file_exists('./config/database.json')) {
-
             $this->db = json_decode(file_get_contents('./config/database.json'), true);
-            return $this->db;
         } else {
             echo "Ошибка подключения к базе данных";
         }
     }
 
-    function createUser($login, $password, $confirm_password, $email, $name, $cookie)
+    function getUsers()
     {
-        $this->db["users"][] = array("login" => $login, "password" => md5($password . "Sault"), "confirm_password" => md5($confirm_password . "Sault"), "email" => $email, "name" => $name, "cookie" => "");
-        file_put_contents('./config/database.json', json_encode($this->db, JSON_FORCE_OBJECT));
+        return json_decode(file_get_contents('./config/database.json'), true);
+    }
+
+    function createUser($login, $password, $confirm_password, $sault, $email, $name, $cookie)
+    {
+        try {
+            $this->db["users"][] = array("login" => $login, "password" => md5($password . $sault), "confirm_password" => md5($confirm_password . $sault), "Sault" => $sault, "email" => $email, "name" => $name, "cookie" => "");
+            file_put_contents('./config/database.json', json_encode($this->db, JSON_FORCE_OBJECT));
+        } catch (Throwable $ex) {
+            return false;
+        }
+        return true;
     }
 
     function updateCookie($cookie, $login)
@@ -37,5 +45,19 @@ class Database
                 }
             }
         }
+    }
+    function deleteUser($id){
+
+        if($this->db["users"][$id]){
+            unset($this->db["users"][$id]);
+            file_put_contents('./config/database.json', json_encode($this->db, JSON_FORCE_OBJECT));
+            return true;
+        }else{
+            return false;
+        }
+
+
+
+
     }
 }

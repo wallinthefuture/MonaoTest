@@ -3,14 +3,9 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
 session_start();
 include_once "./objects/user.php";
-
-$jsonArray = [];
-if (file_exists('./config/database.json')) {
-    $json = file_get_contents('./config/database.json');
-    $jsonArray = json_decode($json, true);
-}
-
-$user = new User($jsonArray);
+include_once "./config/database.php";
+$db = new Database();
+$user = new User($db->getUsers());
 
 if (empty($_SESSION['auth']) || $_SESSION['auth'] == false) {
 
@@ -20,7 +15,7 @@ if (empty($_SESSION['auth']) || $_SESSION['auth'] == false) {
         $user->cookie = $_COOKIE['key'];
 
         if ($user->findUser()) {
-            session_start();
+
             $_SESSION['auth'] = true;
             $_SESSION['login'] = $user->login;
 
@@ -30,7 +25,9 @@ if (empty($_SESSION['auth']) || $_SESSION['auth'] == false) {
         http_response_code(400);
     }
 
-}else{
+} else {
+    $user->login = $_SESSION['login'];
 
     http_response_code(201);
+    echo json_encode($user->getNameUser());
 }

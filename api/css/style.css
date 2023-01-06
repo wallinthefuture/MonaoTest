@@ -75,3 +75,22 @@ a {
     color: red;
     text-align: center;
 }
+
+.main__message{
+    font-size: xxx-large;
+}
+
+.exit__btn {
+    background-color: #cd0f0f;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.exit__btn:hover {
+    opacity: 1;
+}

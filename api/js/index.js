@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetch("check_auth.php").then(response => {
         if (!response.ok) {
-            window.location.href = "../../api/auth.html";
+            window.location.href = "http://localhost/ManaoTest/api/auth.html";
         } else {
             response.json().then(name => {
                 const Message = document.createElement('div');
@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 
-    button.addEventListener("click", function(e){
+    button.addEventListener("click", function (e) {
         fetch("logout.php").then(response => {
-           if(response.ok){
-               window.location.href = "../../api/auth.html"
-           }
+            if (response.ok) {
+                window.location.href = "http://localhost/ManaoTest/api/auth.html"
+            }
         })
     })
 

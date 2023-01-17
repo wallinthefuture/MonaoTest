@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 button.insertAdjacentElement('beforebegin', errorMessage);
             });
         } else {
-            window.location.href = "../../api/auth.html";
+            window.location.href = "http://localhost/ManaoTest/api/auth.html";
         }
 
     }

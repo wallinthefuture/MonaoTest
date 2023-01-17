@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
     `
                 button.insertAdjacentElement('beforebegin', errorMessage);
             });
-        }else{
-            window.location.href="../../api/index.html";
+        } else {
+            window.location.href = "http://localhost/ManaoTest/api/index.html";
         }
 
     }
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         form.addEventListener("submit", function (e) {
             const errorMessage = document.querySelector('.error__message');
-            if(errorMessage){
+            if (errorMessage) {
                 errorMessage.remove();
             }
             e.preventDefault();
